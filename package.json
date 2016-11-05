@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^1.0.0",
-    "gorlug-logging": "git+ssh://git@git.gorlug.de:10022/nodejs/gorlug-util.git#v1.0.0",
+    "gorlug-logging": "git+ssh://git@git.gorlug.de:10022/nodejs/gorlug-util.git#v1.1.0",
     "string": "^3.3.3"
   }
 }

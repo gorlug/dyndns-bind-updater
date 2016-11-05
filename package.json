@@ -14,5 +14,9 @@
     ""
   ],
   "author": "Achim Rohn <achim@rohn.eu>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^1.0.0",
+    "string": "^3.3.3"
+  }
 }

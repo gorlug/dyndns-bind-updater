@@ -1,0 +1,5 @@
+server ${target_server} ${target_port}
+zone %DOMAIN%
+update delete %DOMAIN% A
+update add %DOMAIN% 300 A %IP%
+send

@@ -46,7 +46,8 @@ function execPromise(command) {
 }
 
 function executeTheUpdate(config) {
-    var update_path = path.resolve(`updates/www.example.com.update`);
+    logger.info(`executing an update of domain ${config.domain}`);
+    var update_path = path.resolve(getUpdatePath(config));
     var command = `nsupdate -k ${config.keyfile} ${update_path}`;
     return execPromise(command); 
 }
@@ -58,4 +59,16 @@ function createPromise(config, message, ip) {
     });
 }
 
-module.exports = createPromise;
+function init(config) {
+    logger.info(`calling init on domain ${config.domain}`);
+    return gutil.promise(fs.stat, getUpdatePath(config)).then(function(stat) {
+        return executeTheUpdate(config);
+    }).catch(function() {
+        // do nothing
+    });
+}
+
+module.exports = {
+    send: createPromise,
+    init: init
+};

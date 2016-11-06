@@ -18,9 +18,11 @@
   "dependencies": {
     "fs-extra": "^1.0.0",
     "gorlug-util": "git+ssh://git@git.gorlug.de:10022/nodejs/gorlug-util.git#v1.2.0",
+    "shelljs": "^0.7.5",
     "string": "^3.3.3"
   },
   "devDependencies": {
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "mockery": "^2.0.0"
   }
 }

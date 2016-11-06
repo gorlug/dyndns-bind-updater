@@ -1,16 +1,16 @@
 const logger = require("gorlug-util").logger;
 const nsupdate = require("./nsupdate");
 
-function RequestHandler(config, message) {
-    this.config = config;
-    this.message = message;
-}
-
-RequestHandler.prototype.handler = function(request, response) {
+function handler(request, response) {
     var ip = request.headers.http_x_forwarded_for;
     logger.info(`request from ${ip}`);
-    nsupdate.send(this.config, this.message, ip); 
-    response.end("");
+    nsupdate.send(this.config, this.message, ip).then(function() {
+        response.end();
+    }).catch(function(error) {
+        logger.error(error);
+        response.statusCode = 500;
+        response.end();
+    });
 }
 
-module.exports = RequestHandler;
+module.exports = handler;

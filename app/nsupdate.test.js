@@ -3,6 +3,7 @@ const nsupdate = require("./nsupdate");
 const config = require("gorlug-util").config;
 const util = require("gorlug-util").util;
 const logger = require("gorlug-util").logger;
+const fs = require("fs-extra");
 
 const ip = "192.168.3.1";
 var conf;
@@ -15,6 +16,8 @@ describe("Test nsupdate", function() {
         }).then(function(update) {
            update += "";
            return nsupdate(conf, update, ip); 
+        }).then(function() {
+            return util.promise(fs.readFile, `updates/${conf.domain}.update`, "utf8");
         }).then(function(update) {
             var expected = `server ${conf.target_server} ${conf.target_port}
 zone ${conf.domain}

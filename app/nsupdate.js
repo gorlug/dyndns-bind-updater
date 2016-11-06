@@ -1,6 +1,7 @@
 const logger = require("gorlug-util").logger;
 const fs = require("fs-extra");
 const S = require("string");
+const gutil = require("gorlug-util").util;
 
 function replaceVariableConfig(string, key, config) {
     return replaceVariable(string, key, config[key]);
@@ -21,11 +22,18 @@ function createUpdateMessage(config, message, ip) {
     return message.s;
 }
 
+function getUpdatePath(config) {
+    return `updates/${config.domain}.update`;
+}
+
+function writeUpdate(config, message) {
+    var file = getUpdatePath(config);
+    return gutil.promise(fs.writeFile, file, message);
+}
+
 function createPromise(config, message, ip) {
-    return new Promise(function(fullfill, reject) {
-        var update = createUpdateMessage(config, message, ip);
-        fullfill(update);
-    });
+    var update = createUpdateMessage(config, message, ip);
+    return writeUpdate(config, update);
 }
 
 module.exports = createPromise;

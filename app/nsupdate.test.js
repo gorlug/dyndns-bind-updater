@@ -9,7 +9,7 @@ const ip = "192.168.3.1";
 var conf;
 var update;
 
-describe("Test nsupdate", function() {
+describe("nsupdate", function() {
 
     beforeEach(function() {
         return config.initPromise("config/config.json.example").then(function(configInit) {

@@ -4,7 +4,7 @@
   "description": "Server that accepts dyndns requests",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --recursive app"
+    "test": "./run_tests.sh"
   },
   "repository": {
     "type": "git",

@@ -10,6 +10,7 @@ var conf;
 
 describe("Test nsupdate", function() {
     it("test the update message", function() {
+        this.timeout(20000);
         return config.initPromise("config/config.json.example").then(function(configInit) {
             conf = configInit;
             return util.readFilePromise("config/update_example"); 
@@ -33,6 +34,21 @@ update add ${conf.domain} 300 A ${ip}
 send
 `;
             assert.equal(update, expected);
+        });
+    });
+    it("test nsupdate exec failure", function() {
+        mockery.enable({
+            warnOnReplace: false,
+            warnOnUnregistered: false
+        });
+        mockery.registerMock("shelljs/global", require("./shelljsMock_fail"));
+        var promise = require("./nsupdate")({}, "", ip); 
+        mockery.disable();
+        return promise.then(function() {
+            assert.fail(); 
+        }).catch(function(error) {
+            var expected = "could not execute nsupdate stdout: something went wrong, stderr: really wrong"
+            assert.equal(error.message, expected);
         });
     });
 });

@@ -38,7 +38,7 @@ function execPromise(command) {
     return new Promise(function(fullfill, reject) {
         exec(command, function(code, stdout, stderr) {
             if(code != 0) {
-                return reject(gutil.createError("could not execute nsupdate: " + stdout + ", stderr: " + stderr));
+                return reject(gutil.createError(`could not execute nsupdate stdout: ${stdout}, stderr: ${stderr}`));
             }
             fullfill(stdout, stderr);
         });

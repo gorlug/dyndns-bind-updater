@@ -63,8 +63,9 @@ function init(config) {
     logger.info(`calling init on domain ${config.domain}`);
     return gutil.promise(fs.stat, getUpdatePath(config)).then(function(stat) {
         return executeTheUpdate(config);
-    }).catch(function() {
+    }).catch(function(error) {
         // do nothing
+        logger.info(`doing nothing with error ${error} on init`);
     });
 }
 

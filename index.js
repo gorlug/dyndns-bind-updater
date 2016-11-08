@@ -11,6 +11,8 @@ var update;
 logger.info("starting dyndns listener");
 config.initPromise("config/config.json").then(function(configInit) {
     conf = configInit;
+    return require("./app/nsupdate").init(conf);
+}).then(function() {
     return gutil.promise(fs.readFile, "config/update"); 
 }).then(function(update_example) {
     update = update_example + "";

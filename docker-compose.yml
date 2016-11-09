@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  server:
+    image: dyndns
+    ports:
+     - "53:53/udp"
+    restart: unless-stopped
+    volumes:
+     - ./data:/host

@@ -10,7 +10,7 @@ COPY files/* /files/
 RUN cp /files/named.conf /etc/bind/; \
     mkdir /host; \
     ln -s /host/conf/bind /etc/bind/conf
-#RUN adduser -D dyndns; mkdir /dyndns; chown dyndns:dyndns /dyndns
+RUN adduser -D dyndns; mkdir /dyndns; chown dyndns:dyndns /dyndns
 #USER dyndns
 #RUN git clone https://git.gorlug.de/nodejs/dyndns.git /dyndns/
 #RUN cd /dyndns; npm install

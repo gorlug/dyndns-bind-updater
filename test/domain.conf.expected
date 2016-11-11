@@ -1,0 +1,11 @@
+key "www.example.com." {
+  algorithm hmac-sha512;
+  secret "o6tviSLjnCIpKYCpQVT9nkEpru41EuskFbHSh7TDrdt8QvPzkWqxLB80ZaPxYP1Ho7qyOjm0BVrYcmQHoO3fMA==";
+};
+
+zone "www.example.com" IN {
+        type master;
+        file "www.example.com";
+        allow-update { key "www.example.com."; };
+        notify no;
+};

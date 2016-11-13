@@ -10,9 +10,11 @@ function copyIfNotExists {
             cp $1 $2
     fi 
 }
-copyIfNotExists /files/domain.conf /host/conf/bind/domain.conf
-copyIfNotExists /dyndns/config-template/config.json.template /host/conf/dyndns/config.json.template
-copyIfNotExists /dyndns/config-template/update_example /host/conf/dyndns/update_example
+copyIfNotExists /dyndns/config-template/update_example /host/conf/dyndns/update
+if [ ! -e "/host/conf/dyndns/config.json" ]
+then
+        node /dyndns/app/scripts/docker_setup.js
+fi 
 
 chown -R dyndns:dyndns /host/conf/dyndns
 chown -R dyndns:dyndns /host/logs/dyndns

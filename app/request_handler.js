@@ -2,7 +2,7 @@ const logger = require("gorlug-util").logger;
 const nsupdate = require("./nsupdate");
 
 function handler(request, response) {
-    var ip = request.headers.http_x_forwarded_for;
+    var ip = request.headers["x-forwarded-for"];
     logger.info(`request from ${ip}`);
     nsupdate.send(this.config, this.message, ip).then(function() {
         response.end();

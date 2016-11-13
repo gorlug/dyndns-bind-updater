@@ -19,7 +19,7 @@ docker-compose up -d
 To check if it runs: 
 
 ```
-curl --header "http_x_forwarded_for: 192.168.0.1" http://localhost:3000
+curl --header "x-forwarded-for: 192.168.0.1" http://localhost:3000
 nslookup www.example.com 127.0.0.1
 ```
 

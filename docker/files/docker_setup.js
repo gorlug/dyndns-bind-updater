@@ -3,6 +3,7 @@ const fs = require("fs-extra");
 const domain_conf = require("./domain_conf");
 const S = require("string");
 const gutil = require("gorlug-util").util;
+const variable_replace = require("../variable_replace");
 
 // write the domain conf
 var conf_path = "/host/conf/bind";
@@ -25,6 +26,12 @@ domain_conf.generate(domain, key_file, `/files/domain.conf`, `${conf_path}/domai
     config.domain = domain;
     config.keyfile = key_file;
     return gutil.promise(fs.writeJSON, "/host/conf/dyndns/config.json", config);
+}).then(function() {
+    return gutil.promise(fs.readFile, "/files/zone");
+}).then(function(bytes) {
+    var zone = bytes + "";
+    zone = variable_replace.replace(zone, "domain", domain);
+    return gutil.promise(fs.writeFile, `/var/bind/${domain}`, zone);
 }).catch(function(error) {
     console.log(error);
 });

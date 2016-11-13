@@ -21,7 +21,9 @@ chown -R dyndns:dyndns /host/conf/dyndns
 chown -R dyndns:dyndns /host/logs/dyndns
 chown -R dyndns:dyndns /host/updates
 chown dyndns:dyndns /host/conf/bind/K$DOMAIN*
+chown root:named /var/bind/$DOMAIN
+chown -R named:named /host/logs/bind
 
-named
+named -u named
 cd /dyndns
 exec su dyndns -c "exec npm start"

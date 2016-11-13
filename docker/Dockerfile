@@ -11,9 +11,8 @@ RUN cp /files/named.conf /etc/bind/; \
     mkdir /host; \
     ln -s /host/conf/bind /etc/bind/conf
 RUN adduser -D dyndns; mkdir /dyndns; chown dyndns:dyndns /dyndns
-#RUN git clone https://git.gorlug.de/nodejs/dyndns.git /dyndns/
-#RUN cd /dyndns; npm install --production; \
-COPY dyndns-server /dyndns
+RUN git clone -b docker https://github.com/gorlug/dyndns-bind-updater.git /dyndns/
+RUN cd /dyndns; npm install --production; \
 RUN chown -R dyndns:dyndns /dyndns
 USER dyndns
 RUN  cd /dyndns; mv config config-template; \

@@ -1,27 +1,17 @@
 const logger = require("gorlug-util").logger;
 const fs = require("fs-extra");
-const S = require("string");
 const gutil = require("gorlug-util").util;
 const path = require("path");
+const variable_replace = require("./variable_replace");
 require("shelljs/global");
-
-function replaceVariableConfig(string, key, config) {
-    return replaceVariable(string, key, config[key]);
-}
-
-function replaceVariable(string, key, value) {
-    logger.debug(`replacing key ${key} with value ${value}`);
-    return string.replaceAll("${" + key + "}", value);
-}
 
 function createUpdateMessage(config, message, ip) {
     logger.info(`creating the update message for domain ${config.domain} with ip ${ip}`);
-    message = S(message);
-    message = replaceVariableConfig(message, "target_server", config);
-    message = replaceVariableConfig(message, "target_port", config);
-    message = replaceVariableConfig(message, "domain", config);
-    message = replaceVariable(message, "ip", ip);
-    return message.s;
+    message = variable_replace.replaceConfig(message, "target_server", config);
+    message = variable_replace.replaceConfig(message, "target_port", config);
+    message = variable_replace.replaceConfig(message, "domain", config);
+    message = variable_replace.replace(message, "ip", ip);
+    return message;
 }
 
 function getUpdatePath(config) {

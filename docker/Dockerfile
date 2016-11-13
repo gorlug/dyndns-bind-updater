@@ -1,12 +1,25 @@
 FROM alpine
 MAINTAINER Achim Rohn <achim@rohn.eu>
 
-EXPOSE 9091
+EXPOSE 3000
 EXPOSE 53
 
-RUN apk --no-cache add nodejs git
-RUN adduser -D dyndns
+RUN apk --no-cache add nodejs git bind bind-tools bash
+RUN mkdir /files
+COPY files/* /files/
+RUN cp /files/named.conf /etc/bind/; \
+    mkdir /host; \
+    ln -s /host/conf/bind /etc/bind/conf; \
+    ln -s /host/logs/bind /var/log/named
+RUN adduser -D dyndns; mkdir /dyndns; chown dyndns:dyndns /dyndns
+RUN git clone -b docker https://github.com/gorlug/dyndns-bind-updater.git /dyndns/
+RUN chown -R dyndns:dyndns /dyndns
 USER dyndns
-RUN git clone https://git.gorlug.de/nodejs/dyndns.git /home/dyndns/
-RUN cd /home/dyndns; npm install
+RUN  cd /dyndns; npm install --production; mv config config-template; \
+    ln -s /host/conf/dyndns config; \
+    rm -rf logs; ln -s /host/logs/dyndns logs;\
+    rm -rf updates; ln -s /host/updates updates
 USER root
+COPY startup.sh /files/
+VOLUME ["/host"]
+ENTRYPOINT ["/bin/bash", "/files/startup.sh"]

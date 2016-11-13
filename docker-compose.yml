@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  server:
+    image: dyndns
+    ports:
+     - "53:53/udp"
+     - "53:53"
+     - "3000:3000"
+    restart: unless-stopped
+    volumes:
+     - ./data:/host
+    environment:
+     - DOMAIN=www.example.com

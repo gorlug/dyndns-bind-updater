@@ -14,10 +14,8 @@ function copyIfNotExists {
 copyIfNotExists /dyndns/config-template/update_example /host/conf/dyndns/update
 cp /files/docker_setup.js /dyndns/app/scripts/docker_setup.js
 chown -R dyndns:dyndns /dyndns
-if [ ! -e "/host/conf/dyndns/config.json" ]
-then
-        node /dyndns/app/scripts/docker_setup.js
-fi 
+
+node /dyndns/app/scripts/docker_setup.js
 
 chown -R dyndns:dyndns /host/conf/dyndns
 chown -R dyndns:dyndns /host/logs/dyndns

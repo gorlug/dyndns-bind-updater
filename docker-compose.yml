@@ -9,6 +9,6 @@ services:
      - "3000:3000"
     restart: unless-stopped
     volumes:
-     - /tmp/data:/host
+     - ./data:/host
     environment:
      - DOMAIN=www.example.com
